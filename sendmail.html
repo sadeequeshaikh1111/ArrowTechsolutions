@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>AJAX Form Submission</title>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+	<h1>Contact Form</h1>
+	<form id="contact-form">
+		<label for="name">Name:</label>
+		<input type="text" id="name" name="name" placeholder="Your Name" value="John Doe">
+
+		<label for="email">Email:</label>
+		<input type="email" id="email" name="email" placeholder="Your Email" value="johndoe@example.com">
+
+		<label for="subject">Subject:</label>
+		<input type="text" id="subject" name="subject" placeholder="Subject" value="Hello from AJAX">
+
+		<label for="message">Message:</label>
+		<textarea id="message" name="message" placeholder="Your Message">This is a test message sent via AJAX.</textarea>
+
+		<input type="submit" value="Send Message">
+	</form>
+
+	<script>
+		$(function() {
+			// Submit contact form
+			$('#contact-form').submit(function(event) {
+				event.preventDefault(); // Prevent default form submit
+				var formData = $(this).serialize(); // Serialize form data
+				$.ajax({
+					type: 'post',
+					url: 'http://localhost:3000/send',
+					data: formData,
+					success: function(response) {
+						alert('Message sent successfully!');
+						console.log(response);
+					},
+					error: function(xhr, status, error) {
+						console.log(xhr.responseText);
+						alert('Error occurred while sending message!');
+					}
+				});
+				return false; // Prevent default form submit
+			});
+		});
+	</script>
+</body>
+</html>
